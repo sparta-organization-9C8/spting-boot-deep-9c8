@@ -40,5 +40,5 @@ public class AccountController {
         response.addHeader(JwtUtil.ACCESS_TOKEN, jwtUtil.createToken(userDetails.getAccount().getEmail(), "Access"));
         return new GlobalResDto("Success IssuedToken", HttpStatus.OK.value());
     }
-
+asd
 }
