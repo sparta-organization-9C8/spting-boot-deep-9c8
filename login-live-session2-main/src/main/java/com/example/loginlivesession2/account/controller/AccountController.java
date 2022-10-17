@@ -21,7 +21,7 @@ public class AccountController {
 
     //123123123
     //123123123123123
-
+    //테스트합니다아
     private final JwtUtil jwtUtil;
     private final AccountService accountService;
 
@@ -40,5 +40,4 @@ public class AccountController {
         response.addHeader(JwtUtil.ACCESS_TOKEN, jwtUtil.createToken(userDetails.getAccount().getEmail(), "Access"));
         return new GlobalResDto("Success IssuedToken", HttpStatus.OK.value());
     }
-asd
 }
