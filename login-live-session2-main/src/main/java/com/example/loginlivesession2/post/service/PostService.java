@@ -1,9 +1,11 @@
 package com.example.loginlivesession2.post.service;
 
+import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,9 +27,13 @@ public class PostService {
     }
 
     //글 쓰기
-    public Post createPost(PostDto requestDto) {
+    @Transactional
+    public GlobalResDto createPost(PostDto requestDto) {
+
         Post Post = new Post(requestDto);
-        return postRepository.save(Post);
+        postRepository.save(Post);
+
+        return new GlobalResDto("Success Save Post", HttpStatus.OK.value());
     }
 
     @Transactional

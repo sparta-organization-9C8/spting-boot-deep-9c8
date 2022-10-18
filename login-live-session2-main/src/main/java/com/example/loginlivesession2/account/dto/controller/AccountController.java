@@ -1,11 +1,11 @@
-package com.example.loginlivesession2.account.controller;
+package com.example.loginlivesession2.account.dto.controller;
 
 import com.example.loginlivesession2.account.dto.AccountReqDto;
 import com.example.loginlivesession2.account.dto.LoginReqDto;
 import com.example.loginlivesession2.account.service.AccountService;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
-import com.example.loginlivesession2.security.user.UserDetailsImpl;
+import com.example.loginlivesession2.jwt.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
