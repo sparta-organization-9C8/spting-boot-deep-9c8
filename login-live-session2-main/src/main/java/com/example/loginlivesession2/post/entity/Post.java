@@ -1,7 +1,9 @@
 package com.example.loginlivesession2.post.entity;
 
 import com.example.loginlivesession2.Timestamped;
+import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.entity.Comment;
+import com.example.loginlivesession2.like.entity.Like;
 import com.example.loginlivesession2.post.dto.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +31,10 @@ public class Post extends Timestamped {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(String username, String title, String contents) {
-        this.username = username;
+    @OneToMany(mappedBy = "post")
+    private List<Like> like = new ArrayList<>();
+
+    public Post(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }

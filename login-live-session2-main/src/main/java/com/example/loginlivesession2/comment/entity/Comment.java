@@ -1,5 +1,6 @@
 package com.example.loginlivesession2.comment.entity;
 
+
 import com.example.loginlivesession2.Timestamped;
 import com.example.loginlivesession2.comment.dto.CommentDto;
 import com.example.loginlivesession2.post.entity.Post;
@@ -29,7 +30,7 @@ public class Comment extends Timestamped {
 
     public Comment(CommentDto requestDto, Post post_get) {
         this.content = requestDto.getContent();
-        this.post = post_get;
+        this.post = post_get; //??? Dto를 거치지 않고 그냥 가져오는건가?
     }
 
     public void update(CommentDto requestDto) {
