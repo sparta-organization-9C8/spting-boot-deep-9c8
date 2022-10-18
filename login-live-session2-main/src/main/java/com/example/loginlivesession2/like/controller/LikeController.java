@@ -2,6 +2,7 @@ package com.example.loginlivesession2.like.controller;
 
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
+import com.example.loginlivesession2.like.service.LikeService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("api/like")
 public class LikeController {
-    private final LikesService likesService;
-    private final JwtUtil jwtUtil;
+    private final LikeService likeService;
 
     @PostMapping("/{postId}")
-    public Account createLike(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        Account account = userDetails.getAccount();
-//        String email = jwtUtil.getEmailFromToken(token);
-        return account;
-//        return likesService.createLike(postId, email);
+    public String createLike(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        return likeService.createLike(postId, userDetails);
+        return "하이";
     }
 
     // 좋아요 저장로직
