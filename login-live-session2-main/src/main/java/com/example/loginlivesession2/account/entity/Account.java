@@ -19,16 +19,17 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
+    private String username;
+    @NotBlank
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private String phoneNumber;
+
 
     public Account(AccountReqDto accountReqDto) {
+        this.username = accountReqDto.getUsername();
         this.email = accountReqDto.getEmail();
         this.password = accountReqDto.getPassword();
-        this.phoneNumber = accountReqDto.getPhoneNumber();
     }
 
 }
