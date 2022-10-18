@@ -41,25 +41,28 @@ public class PostService {
     //게시글 상세 조회
     @Transactional
     public ResponseEntity<PostResDto> getPost(Long id) {
-        Post post =  postRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Not Found Post")
-        );
+        Post post =  checkPost(postRepository,id);
         PostResDto postResDto = new PostResDto(post);
-
         return ResponseEntity.ok(postResDto);
     }
 
     @Transactional
-    public Optional<Post> updatePost(PostDto requestDto, Long id) {
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("id 없습니다.")
-        );
+    public GlobalResDto updatePost(PostDto requestDto, Long id) {
+
+        Post post = checkPost(postRepository,id);
         post.update(requestDto);
-        return postRepository.findById(id);
+
+        return new GlobalResDto("Success Update Course", HttpStatus.OK.value());
     }
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);
+    }
+
+    private Post checkPost(PostRepository postRepository, Long id) {
+        return postRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Not Found Post")
+        );
     }
 
 

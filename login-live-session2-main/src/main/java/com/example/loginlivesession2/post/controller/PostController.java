@@ -41,7 +41,7 @@ public class PostController extends Timestamped {
 
     //글 수정
     @PutMapping("/api/auth/post/{id}")
-    public Optional<Post> updatePost(@RequestBody PostDto requestDto, @PathVariable Long id){
+    public GlobalResDto updatePost(@RequestBody PostDto requestDto, @PathVariable Long id){
         return postService.updatePost(requestDto, id);
     }
 
