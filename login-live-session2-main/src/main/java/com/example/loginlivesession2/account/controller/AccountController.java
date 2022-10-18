@@ -1,4 +1,4 @@
-package com.example.loginlivesession2.account.dto.controller;
+package com.example.loginlivesession2.account.controller;
 
 import com.example.loginlivesession2.account.dto.AccountReqDto;
 import com.example.loginlivesession2.account.dto.LoginReqDto;

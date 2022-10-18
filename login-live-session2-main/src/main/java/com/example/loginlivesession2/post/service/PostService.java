@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostService {
@@ -52,11 +51,15 @@ public class PostService {
         Post post = checkPost(postRepository,id);
         post.update(requestDto);
 
-        return new GlobalResDto("Success Update Course", HttpStatus.OK.value());
+        return new GlobalResDto("Success Update Post", HttpStatus.OK.value());
     }
 
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
+    public GlobalResDto deletePost(Long id) {
+
+        Post post  = checkPost(postRepository,id);
+        postRepository.delete(post);
+
+        return new GlobalResDto("Success Delete Post", HttpStatus.OK.value());
     }
 
     private Post checkPost(PostRepository postRepository, Long id) {
@@ -64,7 +67,5 @@ public class PostService {
                 () -> new RuntimeException("Not Found Post")
         );
     }
-
-
 }
 

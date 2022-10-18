@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -47,7 +46,7 @@ public class PostController extends Timestamped {
 
     //글 삭제
     @DeleteMapping("/api/auth/post/{id}")
-    public void deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
+    public GlobalResDto deletePost(@PathVariable Long id){
+        return postService.deletePost(id);
     }
 }
