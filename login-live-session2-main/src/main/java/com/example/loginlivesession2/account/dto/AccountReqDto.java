@@ -10,16 +10,17 @@ import javax.validation.constraints.NotBlank;
 public class AccountReqDto {
 
     @NotBlank
+    private String username;
+    @NotBlank
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private String phoneNumber;
 
-    public AccountReqDto(String email, String password, String phoneNumber) {
+
+    public AccountReqDto(String email, String password, String username) {
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
     }
 
     public void setEncodePwd(String encodePwd) {
