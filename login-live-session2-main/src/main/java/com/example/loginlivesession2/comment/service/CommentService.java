@@ -3,6 +3,7 @@ package com.example.loginlivesession2.comment.service;
 
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.dto.CommentDto;
+import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.repository.CommentRepository;
 import com.example.loginlivesession2.post.entity.Post;
@@ -24,7 +25,7 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public Comment createComment(CommentDto requestDto, Account account, Long postId) {
+    public CommentResponseDto createComment(CommentDto requestDto, Account account, Long postId) {
 
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
         Post post_get = postRepository.findById(postId).orElseThrow(
@@ -32,8 +33,10 @@ public class CommentService {
         );
 
         Comment comment = new Comment(requestDto, post_get, account);
+        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+        commentRepository.save(comment);
 
-        return commentRepository.save(comment);
+        return commentResponseDto;
     }
 
 
