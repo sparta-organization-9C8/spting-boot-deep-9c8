@@ -10,6 +10,7 @@ import com.example.loginlivesession2.post.repository.PostRepository;
 import com.example.loginlivesession2.post.service.PostService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class PostController extends Timestamped {
 
     //모든 글 읽어 오기
     @GetMapping("/post")
-    public List<Post> getAllpost(){
+    public List<PostResponseDto> getAllpost(){
         return postService.getAllpost();
     }
 

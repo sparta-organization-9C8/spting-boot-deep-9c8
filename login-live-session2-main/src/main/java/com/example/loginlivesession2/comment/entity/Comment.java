@@ -30,7 +30,8 @@ public class Comment extends Timestamped {
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "account_id")
+    @JsonIgnore
     private Account account;
 
     public Comment(CommentDto requestDto, Post post_get, Account account) {

@@ -1,7 +1,9 @@
 package com.example.loginlivesession2.account.entity;
 
 import com.example.loginlivesession2.account.dto.AccountReqDto;
+import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.like.entity.Like;
+import com.example.loginlivesession2.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +29,14 @@ public class Account {
     @NotBlank
     private String password;
 
-//    @OneToMany(mappedBy = "account") // 마이페이지에서 내가 좋아요한 글을 조회할 때!
-//    List<Like> likes = new ArrayList<>();
+    @OneToMany(mappedBy = "account")
+    List<Post> post = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account")
+    List<Comment> comment = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account")
+    List<Like> likes = new ArrayList<>();
 
 
     public Account(AccountReqDto accountReqDto) {

@@ -19,8 +19,7 @@ public class LikeController {
 
     @PostMapping("/{postId}")
     public String createLike(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        return likeService.createLike(postId, userDetails);
-        return "하이";
+        return likeService.createLike(postId, userDetails);
     }
 
     // 좋아요 저장로직

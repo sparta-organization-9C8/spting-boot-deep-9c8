@@ -1,6 +1,7 @@
 package com.example.loginlivesession2.account.controller;
 
 import com.example.loginlivesession2.account.dto.AccountReqDto;
+import com.example.loginlivesession2.account.dto.AccountResponseDto;
 import com.example.loginlivesession2.account.dto.LoginReqDto;
 import com.example.loginlivesession2.account.service.AccountService;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
@@ -31,6 +32,11 @@ public class AccountController {
     @PostMapping("/account/login")
     public GlobalResDto login(@RequestBody @Valid LoginReqDto loginReqDto, HttpServletResponse response) {
         return accountService.login(loginReqDto, response);
+    }
+
+    @GetMapping("/account/get")
+    public AccountResponseDto getAccount(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return accountService.getAccount(userDetails);
     }
 
     @GetMapping("/issue/token")
