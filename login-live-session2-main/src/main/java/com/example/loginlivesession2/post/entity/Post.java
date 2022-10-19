@@ -21,10 +21,14 @@ public class Post extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    @Column(nullable = false)
-    private String username;
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private Account account;
+
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = true)
     private String contents;
 
@@ -38,14 +42,13 @@ public class Post extends Timestamped {
         this.title = title;
         this.contents = contents;
     }
-    public Post(PostDto requestDto) {
-        this.username = requestDto.getUsername();
+    public Post(PostDto requestDto, Account account) {
+        this.account = account;
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
 
     public void update(PostDto requestDto) {
-        this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }

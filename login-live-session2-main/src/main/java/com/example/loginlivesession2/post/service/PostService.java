@@ -61,16 +61,31 @@ public class PostService {
 
     //업데이트 기능
     @Transactional
-    public Optional<Post> updatePost(PostDto requestDto, Long id) {
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("id 없습니다.")
+    public PostResponseDto updatePost(PostDto requestDto, Long postId, Account currentAccount) {
+        Post post = postRepository.findById(postId).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 글이 없습니다.")
         );
-        post.update(requestDto);
-        return postRepository.findById(id);
+        if (post.getAccount().getUserId() == currentAccount.getUserId()){
+            post.update(requestDto);
+            return new PostResponseDto(post);
+        }else {
+            throw new RuntimeException("작성자가 아닙니다.");
+        }
+
     }
 
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
+    // 삭제 기능
+    @Transactional
+    public void deletePost(Long postId, Account currentAccount) {
+        Post post = postRepository.findById(postId).orElseThrow(
+                ()-> new IllegalArgumentException("해당하는 글이 없습니다.")
+        );
+        if(post.getAccount().getUserId().equals(currentAccount.getUserId())) {
+            postRepository.deleteById(postId);
+        } else {
+            throw new RuntimeException("작성자가 아닙니다.");
+        }
+
     }
 
 
