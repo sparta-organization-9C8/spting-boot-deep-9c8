@@ -39,7 +39,7 @@ public class PostService {
             // 게시글 1개씩 작업을 진행
 
             // 게시글에 속한 댓글을 꺼내줍니다.
-  
+
 
             // entity를 dto로 변환해 줍니다.
             // 과정1: commentResponseDtos 를 commentResponseDtos에 넣어줍니다.
@@ -86,7 +86,7 @@ public class PostService {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 글이 없습니다.")
         );
-        if (post.getAccount().getUserId() == currentAccount.getUserId()) {
+        if (post.getAccount().getUserId().equals(currentAccount.getUserId())) {
             post.update(requestDto);
             return new PostResponseDto(post);
         } else {

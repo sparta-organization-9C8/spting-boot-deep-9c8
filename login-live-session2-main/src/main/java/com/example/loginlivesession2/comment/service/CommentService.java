@@ -56,7 +56,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
         );
-        if(comment.getAccount().getUserId() == currentAccount.getUserId()){
+        if(comment.getAccount().getUserId().equals(currentAccount.getUserId())){
             comment.update(requestDto);
             return comment.getCommentId();
             // return 어떻게 해야할 지?
