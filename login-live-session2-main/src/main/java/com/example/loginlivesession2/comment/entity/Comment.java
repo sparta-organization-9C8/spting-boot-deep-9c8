@@ -2,6 +2,7 @@ package com.example.loginlivesession2.comment.entity;
 
 
 import com.example.loginlivesession2.Timestamped;
+import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.dto.CommentDto;
 import com.example.loginlivesession2.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,12 +29,18 @@ public class Comment extends Timestamped {
     @JsonIgnore
     private Post post;
 
-    public Comment(CommentDto requestDto, Post post_get) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Account account;
+
+    public Comment(CommentDto requestDto, Post post_get, Account account) {
         this.content = requestDto.getContent();
         this.post = post_get; //??? Dto를 거치지 않고 그냥 가져오는건가?
+        this.account = account;
     }
 
     public void update(CommentDto requestDto) {
+
         this.content = requestDto.getContent();
     }
 

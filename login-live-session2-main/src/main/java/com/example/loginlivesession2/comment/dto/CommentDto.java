@@ -5,13 +5,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+
 public class CommentDto {
 
-    private Long postId;
     private String content;
 
-    public CommentDto(Long postId, String content) {
-        this.postId = postId;
+    public CommentDto(String content) {
+
         this.content = content;
     }
 }

@@ -39,7 +39,10 @@ public class WebSecurityConfig {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/api/account/**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/api/account/**").permitAll()
+                .antMatchers("/api/post").permitAll() // 보안상으로 이렇게 사용해도 괜찮은건지?
+                .antMatchers("/api/post/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
