@@ -38,21 +38,21 @@ public class CommentController {
 
     //댓글 수정
     @PutMapping("/{postId}/{commentId}")
-    public Long updateComment(@RequestBody CommentDto requestDto,
+    public String updateComment(@RequestBody CommentDto requestDto,
                               @PathVariable Long commentId,
                               @PathVariable Long postId,
                               @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.update(requestDto, commentId, postId, userDetails.getAccount());
-        return commentId;
+        return "댓글 수정 "+commentId+" 번 아이디";
     }
 
 
     //댓글 삭제
     @DeleteMapping("/{postId}/{commentId}")
-    public Long deleteComment(@PathVariable Long commentId,
+    public String deleteComment(@PathVariable Long commentId,
                               @PathVariable Long postId,
                               @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.delete(commentId, postId, userDetails.getAccount());
-        return commentId;
+        return "댓글 삭제 "+commentId+" 번 아이디";
     }
 }
