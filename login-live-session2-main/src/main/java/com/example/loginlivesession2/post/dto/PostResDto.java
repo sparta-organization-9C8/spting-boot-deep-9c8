@@ -13,7 +13,6 @@ public class PostResDto {
     private String contents;
 
     public PostResDto(Post post) {
-        this.username = post.getUsername();
         this.title = post.getTitle();
         this.contents = post.getContents();
     }

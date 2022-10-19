@@ -1,15 +1,12 @@
 package com.example.loginlivesession2.account.entity;
 
 import com.example.loginlivesession2.account.dto.AccountReqDto;
-import com.example.loginlivesession2.like.entity.Like;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Entity

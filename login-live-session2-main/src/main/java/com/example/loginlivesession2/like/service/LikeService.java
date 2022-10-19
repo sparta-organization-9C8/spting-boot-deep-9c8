@@ -2,7 +2,6 @@ package com.example.loginlivesession2.like.service;
 
 
 import com.example.loginlivesession2.account.entity.Account;
-import com.example.loginlivesession2.account.repository.AccountRepository;
 import com.example.loginlivesession2.like.entity.Like;
 import com.example.loginlivesession2.like.repository.LikeRepository;
 import com.example.loginlivesession2.post.entity.Post;

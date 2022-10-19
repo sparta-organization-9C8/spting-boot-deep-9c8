@@ -1,7 +1,5 @@
 package com.example.loginlivesession2.like.controller;
 
-import com.example.loginlivesession2.account.entity.Account;
-import com.example.loginlivesession2.jwt.util.JwtUtil;
 import com.example.loginlivesession2.like.service.LikeService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;

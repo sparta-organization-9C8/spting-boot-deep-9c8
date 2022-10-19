@@ -2,7 +2,6 @@ package com.example.loginlivesession2.post.controller;
 
 
 import com.example.loginlivesession2.Timestamped;
-import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
 import com.example.loginlivesession2.post.entity.Post;
@@ -10,13 +9,11 @@ import com.example.loginlivesession2.post.repository.PostRepository;
 import com.example.loginlivesession2.post.service.PostService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
