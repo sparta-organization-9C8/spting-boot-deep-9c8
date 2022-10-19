@@ -5,6 +5,7 @@ import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.dto.PostResDto;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
+import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +30,15 @@ public class PostService {
 
     //게시글 작성
     @Transactional
-    public GlobalResDto createPost(PostDto requestDto) {
+    public Post createPost(PostDto requestDto, UserDetailsImpl userDetails) {
 
-        Post Post = new Post(requestDto);
-        postRepository.save(Post);
+        String username = userDetails.getAccount().getUsername();
+        Post post = new Post(requestDto, username);
+        postRepository.save(post);
 
-        return new GlobalResDto("Success Save Post", HttpStatus.OK.value());
+        return post;
+
+//        return new GlobalResDto("Success Save Post", HttpStatus.OK.value());
     }
 
     //게시글 상세 조회
@@ -46,12 +50,23 @@ public class PostService {
     }
 
     @Transactional
-    public GlobalResDto updatePost(PostDto requestDto, Long id) {
+    public String updatePost(PostDto requestDto, Long id, UserDetailsImpl userDetails) {
 
-        Post post = checkPost(postRepository,id);
-        post.update(requestDto);
+        Post post = postRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("id 없습니다.")
+        );
 
-        return new GlobalResDto("Success Update Post", HttpStatus.OK.value());
+        if(post.getUsername().equals(userDetails.getAccount().getUsername())){
+            post.update(requestDto);
+            return "댓글수정완료";
+        } else {
+            return "실패";
+        }
+
+//        Post post = checkPost(postRepository,id);
+//        post.update(requestDto);
+//
+//        return new GlobalResDto("Success Update Post", HttpStatus.OK.value());
     }
 
     public GlobalResDto deletePost(Long id) {

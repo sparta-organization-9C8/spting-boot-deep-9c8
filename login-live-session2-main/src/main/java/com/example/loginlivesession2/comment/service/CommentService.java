@@ -6,6 +6,7 @@ import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.repository.CommentRepository;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
+import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -20,14 +21,14 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    public Comment createComment(CommentDto requestDto) {
+    public Comment createComment(CommentDto requestDto, Long id, UserDetailsImpl userDetails) {
 
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
-        Post post_get = postRepository.findById(requestDto.getPostId()).orElseThrow(
+        Post post = postRepository.findById(id).orElseThrow(
                 ()-> new IllegalArgumentException("id 없습니다.")
         );
 
-        Comment comment = new Comment(requestDto, post_get);
+        Comment comment = new Comment(requestDto, post, userDetails.getAccount().getUsername(),post.getPostId());
 
         return commentRepository.save(comment);
     }

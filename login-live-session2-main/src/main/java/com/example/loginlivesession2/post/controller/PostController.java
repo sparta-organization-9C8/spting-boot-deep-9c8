@@ -8,8 +8,10 @@ import com.example.loginlivesession2.post.dto.PostResDto;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
 import com.example.loginlivesession2.post.service.PostService;
+import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class PostController extends Timestamped {
 
     // 게시글 작성
     @PostMapping("/api/post")
-    public GlobalResDto createPost(@RequestBody PostDto requestDto) {
-        return postService.createPost(requestDto);
+    public Post createPost(@RequestBody PostDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.createPost(requestDto, userDetails);
     }
 
     // 게시글 상세 조회
@@ -40,8 +42,10 @@ public class PostController extends Timestamped {
 
     //글 수정
     @PutMapping("/api/auth/post/{id}")
-    public GlobalResDto updatePost(@RequestBody PostDto requestDto, @PathVariable Long id){
-        return postService.updatePost(requestDto, id);
+    public String updatePost(@RequestBody PostDto requestDto,
+                                   @PathVariable Long id,
+                                   @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.updatePost(requestDto, id, userDetails);
     }
 
     //글 삭제

@@ -29,19 +29,14 @@ public class Post extends Timestamped {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(String username, String title, String contents) {
+
+    public Post(PostDto requestDto, String username) {
         this.username = username;
-        this.title = title;
-        this.contents = contents;
-    }
-    public Post(PostDto requestDto) {
-        this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
 
     public void update(PostDto requestDto) {
-        this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
