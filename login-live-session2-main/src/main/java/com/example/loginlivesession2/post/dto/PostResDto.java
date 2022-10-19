@@ -12,9 +12,9 @@ public class PostResDto {
     private String title;
     private String contents;
 
-    public PostResDto(Post post) {
-        this.username = post.getUsername();
-        this.title = post.getTitle();
-        this.contents = post.getContents();
-    }
+//    public PostResDto(Post post) {
+//        this.username = post.getUsername();
+//        this.title = post.getTitle();
+//        this.contents = post.getContents();
+//    }
 }

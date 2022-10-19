@@ -28,7 +28,7 @@ public class PostController extends Timestamped {
 
     //모든 글 읽어 오기
     @GetMapping("/post")
-    public List<Post> getAllpost(){
+    public List<PostResponseDto> getAllpost(){
         return postService.getAllpost();
     }
 
