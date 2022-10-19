@@ -9,37 +9,50 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api/comment")
 public class CommentController {
     private final CommentService commentService;
 
 
-    @PostMapping("/api/auth/comment")
-    public Comment createComment(@RequestBody CommentDto requestDto,
+    // 댓글 생성
+    @PostMapping("/{postId}/create")
+    public Comment createComment(@RequestBody @Valid CommentDto requestDto,
+                                 @PathVariable Long postId,
                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return commentService.createComment(requestDto);
+        return commentService.createComment(requestDto, userDetails.getAccount(), postId);
+        // 작성할 때 순서 조심하기 (그 위치에 있는 것을 가져오는 것이기 때문)
     }
 
-    @GetMapping("/api/comment/{id}")
+
+    //댓글 전체 조회(API 테이블에는 나와있지 않음)
+    @GetMapping("/{postId}")
     public List<Comment> getAllComment() {
         return commentService.getAllComment();
     }
 
-    @PutMapping("/api/auth/comment/{id}")
+
+    //댓글 수정
+    @PutMapping("/{postId}/{commentId}")
     public Long updateComment(@RequestBody CommentDto requestDto,
-                              @PathVariable Long id,
+                              @PathVariable Long commentId,
+                              @PathVariable Long postId,
                               @AuthenticationPrincipal UserDetailsImpl userDetails){
-        commentService.update(requestDto,id);
-        return id;
+        commentService.update(requestDto, commentId, postId, userDetails.getAccount());
+        return commentId;
     }
 
-    @DeleteMapping("/api/auth/comment/{id}")
-    public Long deleteComment(@PathVariable Long id,
+
+    //댓글 삭제
+    @DeleteMapping("/{postId}/{commentId}")
+    public Long deleteComment(@PathVariable Long commentId,
+                              @PathVariable Long postId,
                               @AuthenticationPrincipal UserDetailsImpl userDetails){
-        commentService.delete(id);
-        return id;
+        commentService.delete(commentId, postId, userDetails.getAccount());
+        return commentId;
     }
 }
