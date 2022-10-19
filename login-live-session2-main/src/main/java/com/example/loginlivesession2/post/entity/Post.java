@@ -5,6 +5,7 @@ import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.like.entity.Like;
 import com.example.loginlivesession2.post.dto.PostDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,8 +23,9 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @JoinColumn(nullable = false)
     @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @Column(nullable = false)
@@ -38,10 +40,6 @@ public class Post extends Timestamped {
     @OneToMany(mappedBy = "post")
     private List<Like> like = new ArrayList<>();
 
-    public Post(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
     public Post(PostDto requestDto, Account account) {
         this.account = account;
         this.title = requestDto.getTitle();

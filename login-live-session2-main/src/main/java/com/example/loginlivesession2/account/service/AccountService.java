@@ -1,6 +1,7 @@
 package com.example.loginlivesession2.account.service;
 
 import com.example.loginlivesession2.account.dto.AccountReqDto;
+import com.example.loginlivesession2.account.dto.AccountResponseDto;
 import com.example.loginlivesession2.account.dto.LoginReqDto;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.entity.RefreshToken;
@@ -9,6 +10,7 @@ import com.example.loginlivesession2.account.repository.RefreshTokenRepository;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.jwt.dto.TokenDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
+import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,6 +69,14 @@ public class AccountService {
 
         return new GlobalResDto("Success Login", HttpStatus.OK.value());
 
+    }
+
+    @Transactional
+    public AccountResponseDto getAccount(UserDetailsImpl userDetails) {
+        Account account = accountRepository.findById(userDetails.getAccount().getUserId()).orElseThrow(
+                () -> new IllegalArgumentException("")
+        );
+        return new AccountResponseDto(account);
     }
 
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
