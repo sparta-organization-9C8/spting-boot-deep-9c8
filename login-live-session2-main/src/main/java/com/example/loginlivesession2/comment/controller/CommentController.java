@@ -4,7 +4,9 @@ package com.example.loginlivesession2.comment.controller;
 import com.example.loginlivesession2.comment.dto.CommentDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.service.CommentService;
+import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +18,8 @@ public class CommentController {
 
 
     @PostMapping("/api/auth/comment")
-    public Comment createComment(@RequestBody CommentDto requestDto) {
+    public Comment createComment(@RequestBody CommentDto requestDto,
+                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.createComment(requestDto);
     }
 
@@ -26,13 +29,16 @@ public class CommentController {
     }
 
     @PutMapping("/api/auth/comment/{id}")
-    public Long updateComment(@RequestBody CommentDto requestDto, @PathVariable Long id){
+    public Long updateComment(@RequestBody CommentDto requestDto,
+                              @PathVariable Long id,
+                              @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.update(requestDto,id);
         return id;
     }
 
     @DeleteMapping("/api/auth/comment/{id}")
-    public Long deleteComment(@PathVariable Long id){
+    public Long deleteComment(@PathVariable Long id,
+                              @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.delete(id);
         return id;
     }
