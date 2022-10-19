@@ -32,7 +32,7 @@ public class Post extends Timestamped {
     @Column(nullable = true)
     private String contents;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")

@@ -86,8 +86,10 @@ public class PostService {
             throw new RuntimeException("작성자가 아닙니다.");
         }
 
+    private Post checkPost(PostRepository postRepository, Long id) {
+        return postRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Not Found Post")
+        );
     }
-
-
 }
 

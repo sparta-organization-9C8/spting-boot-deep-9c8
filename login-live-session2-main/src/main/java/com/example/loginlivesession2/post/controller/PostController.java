@@ -10,6 +10,7 @@ import com.example.loginlivesession2.post.repository.PostRepository;
 import com.example.loginlivesession2.post.service.PostService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
