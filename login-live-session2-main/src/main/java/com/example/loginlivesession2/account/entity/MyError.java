@@ -1,4 +1,5 @@
-package com.example.loginlivesession2.exception;
+package com.example.loginlivesession2.account.entity;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Error {
+public class MyError {
+
     private String field;
 
     private String message;

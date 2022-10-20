@@ -3,8 +3,11 @@ package com.example.loginlivesession2.comment.service;
 
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.dto.CommentDto;
+import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.repository.CommentRepository;
+import com.example.loginlivesession2.exception.CustomException;
+import com.example.loginlivesession2.exception.ErrorCode;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +27,7 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public Comment createComment(CommentDto requestDto, Account account, Long postId) {
+    public CommentResponseDto createComment(CommentDto requestDto, Account account, Long postId) {
 
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
         Post post_get = postRepository.findById(postId).orElseThrow(
@@ -32,8 +35,10 @@ public class CommentService {
         );
 
         Comment comment = new Comment(requestDto, post_get, account);
+        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+        commentRepository.save(comment);
 
-        return commentRepository.save(comment);
+        return commentResponseDto;
     }
 
 
@@ -50,18 +55,18 @@ public class CommentService {
     public Long update(CommentDto requestDto, Long commentId, Long postId, Account currentAccount) {
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
         Post post_get = postRepository.findById(postId).orElseThrow(
-                ()-> new IllegalArgumentException("게시글이 없습니다.")
+                ()-> new CustomException(ErrorCode.NotFoundPost)
         );
         // 글을 찾아와서 그 글의 댓글을 다시 연결해서 확인하는 방법
         Comment comment = commentRepository.findById(commentId).orElseThrow(
-                () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
+                () -> new CustomException(ErrorCode.NotFoundComment)
         );
         if(comment.getAccount().getUserId().equals(currentAccount.getUserId())){
             comment.update(requestDto);
             return comment.getCommentId();
             // return 어떻게 해야할 지?
         } else {
-            throw new RuntimeException("댓글 작성자가 아닙니다.");
+            throw new CustomException(ErrorCode.NotFoundCommentUser);
         }
 
     }
@@ -70,16 +75,16 @@ public class CommentService {
     @Transactional
     public void delete(Long commentId, Long postId, Account currentAccount) {
         Post post = postRepository.findById(postId).orElseThrow(
-                ()-> new IllegalArgumentException("게시글이 없습니다.")
+                ()-> new CustomException(ErrorCode.NotFoundPost)
         );
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(
-                () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
+                () -> new CustomException(ErrorCode.NotFoundComment)
         );
         if (comment.getAccount().getUserId().equals(currentAccount.getUserId())) {
             commentRepository.deleteById(commentId);
         } else {
-            throw new RuntimeException("댓글 작성자가 아닙니다.");
+            throw new CustomException(ErrorCode.NotFoundCommentUser);
         }
     }
 }

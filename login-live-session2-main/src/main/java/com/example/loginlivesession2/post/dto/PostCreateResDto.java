@@ -12,23 +12,19 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostResponseDto {
+public class PostCreateResDto {
     private Long postId;
     private String title;
     private String content;
     private String username;
-    private List<Comment> comments;
-    private int likeNum;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public PostResponseDto(Post post) {
+    public PostCreateResDto(Post post) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContents();
         this.username = post.getAccount().getUsername();
-        this.comments = post.getComments();
-        this.likeNum = post.getLike().size();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
     }
