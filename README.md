@@ -1,5 +1,13 @@
 # Spring Week 03 심화주차 팀 과제
 
+## 프로젝트 일정 
+2022.10.14- 2022.10.20 (7일)
+- 10/14 : S.A 작성 - API, ERD
+- 10/15 : Git 활용 - Organization, Issue, branch  / Security, JWT 개인 공부
+- 10/17 : 역할 분담 및 프로젝트 시작, first commit
+- 10/18 : CRUD, Authentication, 좋아요 기능 
+- 10/19 : merge, reponseDto 만들어 원하는 형태로 출력, 내 정보 확인
+- 10/20 : 예외 처리, reponseDto 만들어 원하는 형태로 출력, 프로젝트 마무리 및 제출
 
 ### 로그인과 마이페이지
 - 기능
