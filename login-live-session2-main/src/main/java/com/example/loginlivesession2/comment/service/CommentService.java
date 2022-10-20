@@ -31,7 +31,7 @@ public class CommentService {
 
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
         Post post_get = postRepository.findById(postId).orElseThrow(
-                ()-> new IllegalArgumentException("게시글이 없습니다.")
+                ()-> new CustomException(ErrorCode.NotFoundPost)
         );
 
         Comment comment = new Comment(requestDto, post_get, account);

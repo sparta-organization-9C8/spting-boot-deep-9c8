@@ -3,6 +3,7 @@ package com.example.loginlivesession2.account.dto;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
+import com.example.loginlivesession2.like.dto.LikeResponseDto;
 import com.example.loginlivesession2.like.entity.Like;
 import com.example.loginlivesession2.post.dto.PostMyPageResDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
@@ -17,13 +18,15 @@ public class AccountResponseDto {
     private String email;
     private List<PostMyPageResDto> myPosts;
     private List<CommentResponseDto> myComments;
-    private List<Long> mylikePostId;
+    private List<LikeResponseDto> mylikelist;
 
-    public AccountResponseDto(Account account, List<PostMyPageResDto> myPosts, List<CommentResponseDto> myComments, List<Long> mylikePostId) {
+    public AccountResponseDto(Account account, List<PostMyPageResDto> myPosts,
+                              List<CommentResponseDto> myComments,
+                              List<LikeResponseDto> myLikeList) {
         this.username = account.getUsername();
         this.email = account.getEmail();
         this.myPosts = myPosts;
         this.myComments = myComments;
-        this.mylikePostId = mylikePostId;
+        this.mylikelist = myLikeList;
     }
 }

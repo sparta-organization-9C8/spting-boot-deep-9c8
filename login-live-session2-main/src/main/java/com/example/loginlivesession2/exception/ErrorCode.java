@@ -10,9 +10,10 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     NotFoundPost(HttpStatus.NOT_FOUND.value(), "P001", "게시물을 찾을 수 없습니다."),
-    NotFoundUser(HttpStatus.NOT_FOUND.value(), "P002",  "작성자가 일치하지 않습니다."),
+    NotFoundUser(HttpStatus.BAD_REQUEST.value(), "P002",  "작성자가 일치하지 않습니다."),
     NotFoundComment(HttpStatus.NOT_FOUND.value(), "P003", "댓글이 존재하지 않습니다."),
-    NotFoundCommentUser(HttpStatus.NOT_FOUND.value(),  "P004", "댓글 작성자가 아닙니다.")
+    NotFoundCommentUser(HttpStatus.BAD_REQUEST.value(),  "P004", "댓글 작성자가 아닙니다."),
+    AlreadyHaveEmail(HttpStatus.CONFLICT.value(),  "P005", "이미 존재하는 이메일 입니다.")
     ;
 
     private final int httpStatus;

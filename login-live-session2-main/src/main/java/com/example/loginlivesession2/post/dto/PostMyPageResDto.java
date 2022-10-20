@@ -16,7 +16,6 @@ public class PostMyPageResDto {
     private Long postId;
     private String title;
     private String content;
-    private String username;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -24,7 +23,6 @@ public class PostMyPageResDto {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContents();
-        this.username = post.getAccount().getUsername();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
     }

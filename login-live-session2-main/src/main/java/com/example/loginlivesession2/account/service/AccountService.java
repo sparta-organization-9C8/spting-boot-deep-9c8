@@ -9,6 +9,8 @@ import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.entity.RefreshToken;
 import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
+import com.example.loginlivesession2.exception.CustomException;
+import com.example.loginlivesession2.exception.ErrorCode;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.jwt.dto.TokenDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
@@ -42,7 +44,7 @@ public class AccountService {
     public GlobalResDto signup(AccountReqDto accountReqDto) {
         // email 중복 검사
         if(accountRepository.findByEmail(accountReqDto.getEmail()).isPresent()){
-            throw new RuntimeException("Overlap Check");
+            throw new CustomException(ErrorCode.AlreadyHaveEmail);
         }
 
         accountReqDto.setEncodePwd(passwordEncoder.encode(accountReqDto.getPassword()));
@@ -83,13 +85,14 @@ public class AccountService {
     @Transactional
     public AccountResponseDto getAccount(UserDetailsImpl userDetails) {
         Account account = accountRepository.findById(userDetails.getAccount().getUserId()).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 계정입니다.")
+                () -> new CustomException(ErrorCode.NotFoundUser)
         );
         List<Post> myPosts = account.getPost();
         List<PostMyPageResDto> myPostsList = new ArrayList<>();
         for (Post post : myPosts) {
             myPostsList.add(new PostMyPageResDto(post));
         }
+
         List<Comment> myComments = account.getComment();
         List<CommentResponseDto> myCommentList = new ArrayList<>();
         for (Comment comment : myComments) {
@@ -104,7 +107,7 @@ public class AccountService {
 
         List<Long> myLikePostId = new ArrayList<>();
 
-        return new AccountResponseDto(account, myPostsList, myCommentList, myLikePostId);
+        return new AccountResponseDto(account, myPostsList, myCommentList, myLikeList);
     }
 
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
