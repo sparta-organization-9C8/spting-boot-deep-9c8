@@ -29,6 +29,12 @@ public class CommentController {
         // 작성할 때 순서 조심하기 (그 위치에 있는 것을 가져오는 것이기 때문)
     }
 
+    // 재영: 댓글 단건 조회
+    @GetMapping("/test/{commentId}")
+    public Comment findComment(@PathVariable Long commentId) {
+        return commentService.findComment(commentId);
+    }
+
 
     //댓글 전체 조회(API 테이블에는 나와있지 않음)
     @GetMapping("/allcomment")

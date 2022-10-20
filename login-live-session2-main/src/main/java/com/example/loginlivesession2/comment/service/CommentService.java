@@ -42,6 +42,8 @@ public class CommentService {
         return commentResponseDto;
     }
 
+    // 댓글 단건 조회
+
 
     // 댓글 전체 조회
     @Transactional
@@ -80,5 +82,17 @@ public class CommentService {
         } else {
             throw new CustomException(ErrorCode.NotFoundCommentUser);
         }
+    }
+
+    // 재영: 댓글 단건 조회
+    public Comment findComment(Long commentId) {
+        // fetch type Eager일 때는 comment를 찾아올 때 post도 같이 찾아와서
+        // lazy : comment 만 찾아옵니다
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalArgumentException("댓글을 찾을 수 없습니다")
+        );
+        // lazy: comment에서 post를 사용할 때 찾아옵니다.
+        Post post = comment.getPost();
+        return comment;
     }
 }
