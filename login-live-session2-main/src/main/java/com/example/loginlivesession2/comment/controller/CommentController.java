@@ -21,7 +21,7 @@ public class CommentController {
 
 
     // 댓글 생성
-    @PostMapping("/{postId}/create")
+    @PostMapping("/{postId}")
     public CommentResponseDto createComment(@RequestBody @Valid CommentDto requestDto,
                                             @PathVariable Long postId,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -38,22 +38,20 @@ public class CommentController {
 
 
     //댓글 수정
-    @PutMapping("/{postId}/{commentId}")
+    @PutMapping("/{commentId}")
     public String updateComment(@RequestBody @Valid CommentDto requestDto,
                                 @PathVariable Long commentId,
-                                @PathVariable Long postId,
                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        commentService.update(requestDto, commentId, postId, userDetails.getAccount());
+        commentService.update(requestDto, commentId, userDetails.getAccount());
         return "댓글 수정 " + commentId + " 번 아이디";
     }
 
 
     //댓글 삭제
-    @DeleteMapping("/{postId}/{commentId}")
+    @DeleteMapping("/{commentId}")
     public String deleteComment(@PathVariable Long commentId,
-                                @PathVariable Long postId,
                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        commentService.delete(commentId, postId, userDetails.getAccount());
+        commentService.delete(commentId, userDetails.getAccount());
         return "댓글 삭제 " + commentId + " 번 아이디";
     }
 }

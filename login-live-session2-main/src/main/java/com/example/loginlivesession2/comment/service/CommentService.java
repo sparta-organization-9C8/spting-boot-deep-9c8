@@ -35,8 +35,9 @@ public class CommentService {
         );
 
         Comment comment = new Comment(requestDto, post_get, account);
-        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
         commentRepository.save(comment);
+        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+
 
         return commentResponseDto;
     }
@@ -52,11 +53,8 @@ public class CommentService {
 
     // 댓글 수정
     @Transactional
-    public Long update(CommentDto requestDto, Long commentId, Long postId, Account currentAccount) {
-        // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
-        Post post_get = postRepository.findById(postId).orElseThrow(
-                ()-> new CustomException(ErrorCode.NotFoundPost)
-        );
+    public Long update(CommentDto requestDto, Long commentId, Account currentAccount) {
+
         // 글을 찾아와서 그 글의 댓글을 다시 연결해서 확인하는 방법
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundComment)
@@ -64,7 +62,6 @@ public class CommentService {
         if(comment.getAccount().getUserId().equals(currentAccount.getUserId())){
             comment.update(requestDto);
             return comment.getCommentId();
-            // return 어떻게 해야할 지?
         } else {
             throw new CustomException(ErrorCode.NotFoundCommentUser);
         }
@@ -73,10 +70,7 @@ public class CommentService {
 
     //댓글 삭제
     @Transactional
-    public void delete(Long commentId, Long postId, Account currentAccount) {
-        Post post = postRepository.findById(postId).orElseThrow(
-                ()-> new CustomException(ErrorCode.NotFoundPost)
-        );
+    public void delete(Long commentId, Account currentAccount) {
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundComment)

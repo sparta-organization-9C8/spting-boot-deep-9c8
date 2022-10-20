@@ -36,7 +36,7 @@ public class Comment extends Timestamped {
 
     public Comment(CommentDto requestDto, Post post_get, Account account) {
         this.content = requestDto.getContent();
-        this.post = post_get; //??? Dto를 거치지 않고 그냥 가져오는건가?
+        this.post = post_get;
         this.account = account;
     }
 

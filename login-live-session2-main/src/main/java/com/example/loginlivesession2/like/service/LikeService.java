@@ -31,14 +31,13 @@ public class LikeService {
 //        Account account = accountRepository.findByEmail(email)
 //                .orElseThrow(() -> new IllegalArgumentException("이메일 존재하지 않음"));
 //        Boolean bool = likesRepository.existsByPostAndEmail(postId, email);
-
+        Like likes = new Like(post, account);
         if(!likeRepository.existsByPostAndAccount(post, account)){
-            Like likes = new Like(post, account);
             likeRepository.save(likes);
-            return "좋아요를 "+post.getPostId() +"에 누르셨습니다! "+likes.getAccount().getUsername()+"님";
+            return post.getPostId() + "번 게시물에 좋아요를 눌렀습니다! " + likes.getAccount().getUsername() + "님";
         }else {
             likeRepository.deleteByPostAndAccount(post, account);
-            return "좋아요 취소";
+            return post.getPostId() + "번 게시물에 좋아요를 취소했습니다! " + likes.getAccount().getUsername() + "님";
         }
     }
 }

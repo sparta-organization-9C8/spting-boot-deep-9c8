@@ -12,6 +12,7 @@ import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.jwt.dto.TokenDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
+import com.example.loginlivesession2.like.dto.LikeResponseDto;
 import com.example.loginlivesession2.like.entity.Like;
 import com.example.loginlivesession2.post.dto.PostMyPageResDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
@@ -94,11 +95,14 @@ public class AccountService {
         for (Comment comment : myComments) {
             myCommentList.add(new CommentResponseDto(comment));
         }
+
         List<Like> myLikes = account.getLikes();
-        List<Long> myLikePostId = new ArrayList<>();
+        List<LikeResponseDto> myLikeList = new ArrayList<>();
         for (Like like : myLikes) {
-            myLikePostId.add(like.getPost().getPostId());
+            myLikeList.add(new LikeResponseDto(like));
         }
+
+        List<Long> myLikePostId = new ArrayList<>();
 
         return new AccountResponseDto(account, myPostsList, myCommentList, myLikePostId);
     }
