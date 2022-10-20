@@ -82,7 +82,7 @@ public class AccountService {
     @Transactional
     public AccountResponseDto getAccount(UserDetailsImpl userDetails) {
         Account account = accountRepository.findById(userDetails.getAccount().getUserId()).orElseThrow(
-                () -> new IllegalArgumentException("")
+                () -> new IllegalArgumentException("존재하지 않는 계정입니다.")
         );
         List<Post> myPosts = account.getPost();
         List<PostMyPageResDto> myPostsList = new ArrayList<>();

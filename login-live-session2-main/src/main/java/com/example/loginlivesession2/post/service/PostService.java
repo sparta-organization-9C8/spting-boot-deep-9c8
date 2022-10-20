@@ -71,7 +71,7 @@ public class PostService {
 
     //업데이트 기능
     @Transactional
-//    public PostResponseDto updatePost(PostDto requestDto, Long postId, UserDetailImpl userDetails) {
+//  public PostResponseDto updatePost(PostDto requestDto, Long postId, UserDetailImpl userDetails) // 매니저님께 여쭤보기 !!
     public PostResponseDto updatePost(PostDto requestDto, Long postId, Account currentAccount) {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundPost)
