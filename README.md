@@ -9,10 +9,12 @@
 - 10/19 : merge, reponseDto 만들어 원하는 형태로 출력, 내 정보 확인
 - 10/20 : 예외 처리, reponseDto 만들어 원하는 형태로 출력, 프로젝트 마무리 및 제출
 
+
 ## 팀원
 장윤서 Github Younddo
 김병현 Github KimByeungHyun
 김정수 Github dnjawm19
+
 
 ## 구현사항
 ### 로그인과 마이페이지
