@@ -6,6 +6,7 @@ import com.example.loginlivesession2.post.dto.PostResDto;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +16,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
 
-    @Autowired
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
 
-    // 모든 글 읽어오기 + 추가 예정
+    // 모든 글 읽어오기
     public List<Post> getAllpost() {
         return postRepository.findAllByOrderByCreatedAtDesc();
     }
@@ -34,9 +32,8 @@ public class PostService {
 
         String username = userDetails.getAccount().getUsername();
         Post post = new Post(requestDto, username);
-        postRepository.save(post);
 
-        return post;
+        return postRepository.save(post);
 
 //        return new GlobalResDto("Success Save Post", HttpStatus.OK.value());
     }
@@ -52,9 +49,7 @@ public class PostService {
     @Transactional
     public String updatePost(PostDto requestDto, Long id, UserDetailsImpl userDetails) {
 
-        Post post = postRepository.findById(id).orElseThrow(
-                ()-> new IllegalArgumentException("id 없습니다.")
-        );
+        Post post = checkPost(postRepository,id);
 
         if(post.getUsername().equals(userDetails.getAccount().getUsername())){
             post.update(requestDto);
@@ -62,19 +57,29 @@ public class PostService {
         } else {
             return "실패";
         }
-
 //        Post post = checkPost(postRepository,id);
 //        post.update(requestDto);
 //
 //        return new GlobalResDto("Success Update Post", HttpStatus.OK.value());
     }
 
-    public GlobalResDto deletePost(Long id) {
+    @Transactional
+    public String deletePost(Long id,UserDetailsImpl userDetails) {
 
-        Post post  = checkPost(postRepository,id);
-        postRepository.delete(post);
+        Post post = checkPost(postRepository,id);
 
-        return new GlobalResDto("Success Delete Post", HttpStatus.OK.value());
+        if (post.getUsername().equals(userDetails.getAccount().getUsername())) {
+            postRepository.deleteById(id);
+            return "삭제완료";
+        } else {
+            return "실패";
+        }
+
+
+//        Post post  = checkPost(postRepository,id);
+//        postRepository.delete(post);
+//
+//        return new GlobalResDto("Success Delete Post", HttpStatus.OK.value());
     }
 
     private Post checkPost(PostRepository postRepository, Long id) {

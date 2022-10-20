@@ -21,10 +21,10 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    public Comment createComment(CommentDto requestDto, Long id, UserDetailsImpl userDetails) {
+    public Comment createComment(CommentDto requestDto, Long postId, UserDetailsImpl userDetails) {
 
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
-        Post post = postRepository.findById(id).orElseThrow(
+        Post post = postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("id 없습니다.")
         );
 
@@ -38,15 +38,33 @@ public class CommentService {
     }
 
     @Transactional
-    public Long update(CommentDto requestDto, Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("id 없습니다.")
+    public Long update(CommentDto requestDto, Long commentId, UserDetailsImpl userDetails) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalArgumentException("댓글이 없습니다.")
         );
-        comment.update(requestDto);
-        return comment.getCommentId();
+
+        if (comment.getUsername().equals(userDetails.getAccount().getUsername())){
+            comment.update(requestDto);
+            return 1L;
+        } else {
+            return 2L;
+        }
+//
+//        comment.update(requestDto);
+//        return comment.getCommentId();
     }
 
-    public void delete(Long id) {
-        commentRepository.deleteById(id);
+    public String delete(Long id, UserDetailsImpl userDetails) {
+
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("댓글이 없습니다.")
+        );
+
+        if (comment.getUsername().equals(userDetails.getAccount().getUsername())) {
+            commentRepository.deleteById(id);
+            return "삭제완료";
+        } else {
+            return "실패";
+        }
     }
 }

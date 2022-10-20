@@ -6,6 +6,7 @@ import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.service.CommentService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,27 +17,33 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/api/auth/comment/{id}")
+    // 댓글 등록
+    @PostMapping("/api/auth/comment/{postId}")
     public Comment createComment(@RequestBody CommentDto requestDto,
-                                 @PathVariable Long id,
+                                 @PathVariable Long postId,
                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return commentService.createComment(requestDto,id,userDetails);
+        return commentService.createComment(requestDto,postId,userDetails);
     }
 
-    @GetMapping("/api/comment/{id}")
+    // 댓글 전체 조회
+    @GetMapping("/api/comment")
     public List<Comment> getAllComment() {
         return commentService.getAllComment();
     }
 
-    @PutMapping("/api/auth/comment/{id}")
-    public Long updateComment(@RequestBody CommentDto requestDto, @PathVariable Long id){
-        commentService.update(requestDto,id);
-        return id;
+    // 댓글 수정(작성자만)
+    @PutMapping("/api/auth/comment/{commentId}")
+    public Long updateComment(@RequestBody CommentDto requestDto,
+                              @PathVariable Long commentId,
+                              @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.update(requestDto,commentId, userDetails);
     }
 
-    @DeleteMapping("/api/auth/comment/{id}")
-    public Long deleteComment(@PathVariable Long id){
-        commentService.delete(id);
-        return id;
+    // 댓글 삭제(작성자만)
+    @DeleteMapping("/api/auth/comment/{commentId}")
+    public String deleteComment(@PathVariable Long commentId,
+                              @AuthenticationPrincipal UserDetailsImpl userDetails){
+
+        return commentService.delete(commentId,userDetails);
     }
 }

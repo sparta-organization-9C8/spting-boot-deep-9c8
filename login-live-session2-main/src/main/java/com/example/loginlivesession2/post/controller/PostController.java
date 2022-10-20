@@ -50,7 +50,8 @@ public class PostController extends Timestamped {
 
     //글 삭제
     @DeleteMapping("/api/auth/post/{id}")
-    public GlobalResDto deletePost(@PathVariable Long id){
-        return postService.deletePost(id);
+    public String deletePost(@PathVariable Long id,
+                                   @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.deletePost(id,userDetails);
     }
 }
