@@ -3,6 +3,7 @@ package com.example.loginlivesession2.post.service;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.exception.CustomException;
 import com.example.loginlivesession2.exception.ErrorCode;
+import com.example.loginlivesession2.post.dto.PostCreateResDto;
 import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
 import com.example.loginlivesession2.post.entity.Post;
@@ -59,15 +60,18 @@ public class PostService {
 
     //글 쓰기
     @Transactional
-    public Post createPost(PostDto requestDto, Account account) {
+    public PostCreateResDto createPost(PostDto requestDto, Account account) {
 
-        Post Post = new Post(requestDto, account);
-        return postRepository.save(Post);
+        Post post = new Post(requestDto, account);
+        postRepository.save(post);
+        PostCreateResDto postCreateResDto = new PostCreateResDto(post);
+        return postCreateResDto;
     }
 
 
     //업데이트 기능
     @Transactional
+//    public PostResponseDto updatePost(PostDto requestDto, Long postId, UserDetailImpl userDetails) {
     public PostResponseDto updatePost(PostDto requestDto, Long postId, Account currentAccount) {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundPost)

@@ -14,6 +14,8 @@ public class ExceptionHandling {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 
+
+
     @RequiredArgsConstructor
     private static class ErrorResponse {
         private final int httpStatus;

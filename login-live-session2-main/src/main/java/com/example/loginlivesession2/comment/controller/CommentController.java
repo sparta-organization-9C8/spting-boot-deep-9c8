@@ -31,7 +31,7 @@ public class CommentController {
 
 
     //댓글 전체 조회(API 테이블에는 나와있지 않음)
-    @GetMapping("/{postId}")
+    @GetMapping("/allcomment")
     public List<Comment> getAllComment() {
         return commentService.getAllComment();
     }
@@ -39,21 +39,21 @@ public class CommentController {
 
     //댓글 수정
     @PutMapping("/{postId}/{commentId}")
-    public String updateComment(@RequestBody CommentDto requestDto,
-                              @PathVariable Long commentId,
-                              @PathVariable Long postId,
-                              @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public String updateComment(@RequestBody @Valid CommentDto requestDto,
+                                @PathVariable Long commentId,
+                                @PathVariable Long postId,
+                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
         commentService.update(requestDto, commentId, postId, userDetails.getAccount());
-        return "댓글 수정 "+commentId+" 번 아이디";
+        return "댓글 수정 " + commentId + " 번 아이디";
     }
 
 
     //댓글 삭제
     @DeleteMapping("/{postId}/{commentId}")
     public String deleteComment(@PathVariable Long commentId,
-                              @PathVariable Long postId,
-                              @AuthenticationPrincipal UserDetailsImpl userDetails){
+                                @PathVariable Long postId,
+                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
         commentService.delete(commentId, postId, userDetails.getAccount());
-        return "댓글 삭제 "+commentId+" 번 아이디";
+        return "댓글 삭제 " + commentId + " 번 아이디";
     }
 }

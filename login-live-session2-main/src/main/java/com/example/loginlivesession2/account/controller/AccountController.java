@@ -34,6 +34,7 @@ public class AccountController {
         return accountService.login(loginReqDto, response);
     }
 
+    // 내 정보 확인
     @GetMapping("/account/get")
     public AccountResponseDto getAccount(@AuthenticationPrincipal UserDetailsImpl userDetails){
         return accountService.getAccount(userDetails);

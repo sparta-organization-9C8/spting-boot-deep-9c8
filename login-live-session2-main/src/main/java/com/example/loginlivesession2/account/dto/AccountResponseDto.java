@@ -1,8 +1,11 @@
 package com.example.loginlivesession2.account.dto;
 
 import com.example.loginlivesession2.account.entity.Account;
+import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.like.entity.Like;
+import com.example.loginlivesession2.post.dto.PostMyPageResDto;
+import com.example.loginlivesession2.post.dto.PostResponseDto;
 import com.example.loginlivesession2.post.entity.Post;
 import lombok.Getter;
 
@@ -12,15 +15,15 @@ import java.util.List;
 public class AccountResponseDto {
     private String username;
     private String email;
-    private List<Post> post;
-    private List<Comment> comment;
-    private List<Like> likes;
+    private List<PostMyPageResDto> myPosts;
+    private List<CommentResponseDto> myComments;
+    private List<Long> mylikePostId;
 
-    public AccountResponseDto(Account account) {
+    public AccountResponseDto(Account account, List<PostMyPageResDto> myPosts, List<CommentResponseDto> myComments, List<Long> mylikePostId) {
         this.username = account.getUsername();
         this.email = account.getEmail();
-        this.post = account.getPost();
-        this.comment = account.getComment();
-        this.likes = account.getLikes();
+        this.myPosts = myPosts;
+        this.myComments = myComments;
+        this.mylikePostId = mylikePostId;
     }
 }

@@ -22,8 +22,8 @@ public class AccountReqDto {
     @NotBlank(message = "{member.password.notblank}")
 //    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]$"
 //            , message = "{member.password.pattern}")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*[$@$!%*#?&.])[A-Za-z$@$!%*#?&.]$"
-            , message = "{member.password.pattern}")
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*[$@$!%*#?&.])[A-Za-z$@$!%*#?&.]$"
+//            , message = "{member.password.pattern}")
     private String password;
 
 

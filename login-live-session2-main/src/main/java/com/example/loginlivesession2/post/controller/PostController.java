@@ -2,6 +2,7 @@ package com.example.loginlivesession2.post.controller;
 
 
 import com.example.loginlivesession2.Timestamped;
+import com.example.loginlivesession2.post.dto.PostCreateResDto;
 import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
 import com.example.loginlivesession2.post.entity.Post;
@@ -31,8 +32,8 @@ public class PostController extends Timestamped {
 
     // 게시글 작성
     @PostMapping("/post")
-    public Post createPost(@RequestBody @Valid PostDto requestDto,
-                           @AuthenticationPrincipal UserDetailsImpl userDetails
+    public PostCreateResDto createPost(@RequestBody @Valid PostDto requestDto,
+                                       @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         return postService.createPost(requestDto, userDetails.getAccount());
     }
