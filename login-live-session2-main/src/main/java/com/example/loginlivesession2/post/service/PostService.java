@@ -1,5 +1,6 @@
 package com.example.loginlivesession2.post.service;
 
+import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.dto.PostResDto;
@@ -28,10 +29,11 @@ public class PostService {
 
     //게시글 작성
     @Transactional
-    public Post createPost(PostDto requestDto, UserDetailsImpl userDetails) {
+    public Post createPost(PostDto requestDto, Account account) {
 
-        String username = userDetails.getAccount().getUsername();
-        Post post = new Post(requestDto, username);
+//        String username = userDetails.getAccount().getUsername();
+
+        Post post = new Post(requestDto, account);
 
         return postRepository.save(post);
 

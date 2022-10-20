@@ -22,7 +22,7 @@ public class CommentController {
     public Comment createComment(@RequestBody CommentDto requestDto,
                                  @PathVariable Long postId,
                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return commentService.createComment(requestDto,postId,userDetails);
+        return commentService.createComment(requestDto,postId,userDetails.getAccount());
     }
 
     // 댓글 전체 조회

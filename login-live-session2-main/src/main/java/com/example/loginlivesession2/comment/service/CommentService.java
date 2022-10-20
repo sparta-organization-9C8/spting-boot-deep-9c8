@@ -1,6 +1,7 @@
 package com.example.loginlivesession2.comment.service;
 
 
+import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.dto.CommentDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.repository.CommentRepository;
@@ -21,18 +22,20 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    public Comment createComment(CommentDto requestDto, Long postId, UserDetailsImpl userDetails) {
+    @Transactional
+    public Comment createComment(CommentDto requestDto, Long postId, Account account) {
 
         // requestDto에 있는 postId로 post를 찾아옵니다. (postRepository 사용)
         Post post = postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("id 없습니다.")
         );
 
-        Comment comment = new Comment(requestDto, post, userDetails.getAccount().getUsername(),post.getPostId());
+        Comment comment = new Comment(requestDto, account ,post);
 
         return commentRepository.save(comment);
     }
 
+    @Transactional
     public List<Comment> getAllComment() {
         return commentRepository.findAllByOrderByCreatedAtDesc();
     }
@@ -54,6 +57,7 @@ public class CommentService {
 //        return comment.getCommentId();
     }
 
+    @Transactional
     public String delete(Long id, UserDetailsImpl userDetails) {
 
         Comment comment = commentRepository.findById(id).orElseThrow(

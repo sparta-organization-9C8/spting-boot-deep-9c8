@@ -31,7 +31,7 @@ public class PostController extends Timestamped {
     // 게시글 작성
     @PostMapping("/api/post")
     public Post createPost(@RequestBody PostDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.createPost(requestDto, userDetails);
+        return postService.createPost(requestDto, userDetails.getAccount());
     }
 
     // 게시글 상세 조회
