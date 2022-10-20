@@ -2,6 +2,7 @@ package com.example.loginlivesession2.comment.controller;
 
 ;
 import com.example.loginlivesession2.comment.dto.CommentDto;
+import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.service.CommentService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
@@ -21,9 +22,9 @@ public class CommentController {
 
     // 댓글 생성
     @PostMapping("/{postId}/create")
-    public Comment createComment(@RequestBody @Valid CommentDto requestDto,
-                                 @PathVariable Long postId,
-                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public CommentResponseDto createComment(@RequestBody @Valid CommentDto requestDto,
+                                            @PathVariable Long postId,
+                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.createComment(requestDto, userDetails.getAccount(), postId);
         // 작성할 때 순서 조심하기 (그 위치에 있는 것을 가져오는 것이기 때문)
     }
