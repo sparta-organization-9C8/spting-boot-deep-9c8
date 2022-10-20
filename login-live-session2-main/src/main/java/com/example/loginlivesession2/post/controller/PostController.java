@@ -2,6 +2,8 @@ package com.example.loginlivesession2.post.controller;
 
 
 import com.example.loginlivesession2.Timestamped;
+import com.example.loginlivesession2.exception.CustomException;
+import com.example.loginlivesession2.exception.ErrorCode;
 import com.example.loginlivesession2.post.dto.PostCreateResDto;
 import com.example.loginlivesession2.post.dto.PostDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
@@ -34,7 +36,9 @@ public class PostController extends Timestamped {
     @PostMapping("/post")
     public PostCreateResDto createPost(@RequestBody @Valid PostDto requestDto,
                                        @AuthenticationPrincipal UserDetailsImpl userDetails
-    ) {
+    ) { if(userDetails==null){
+        throw new CustomException(ErrorCode.NotFoundToken);
+    }
         return postService.createPost(requestDto, userDetails.getAccount());
     }
 

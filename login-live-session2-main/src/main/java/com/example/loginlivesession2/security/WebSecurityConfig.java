@@ -5,6 +5,7 @@ import com.example.loginlivesession2.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -42,7 +43,7 @@ public class WebSecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/api/account/**").permitAll()
                 .antMatchers("/api/post").permitAll() // 보안상으로 이렇게 사용해도 괜찮은건지?
-                .antMatchers("/api/post/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/post/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
